@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
-    <context-param>
+   <!-- <context-param>
         <param-name>driver-class</param-name>
         <param-value>com.mysql.cj.jdbc.Driver</param-value>
     </context-param>
@@ -18,5 +18,15 @@
     <context-param>
         <param-name>dbPassword</param-name>
         <param-value>12345</param-value>
+    </context-param>-->
+    <context-param>
+        <param-name>origin</param-name>
+        <param-value>http://localhost:5500</param-value>
     </context-param>
+    <resource-ref>
+        <description>DB Connection</description>
+        <res-ref-name>jdbc/stuRegistration</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
 </web-app>

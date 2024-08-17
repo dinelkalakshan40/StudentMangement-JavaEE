@@ -11,14 +11,19 @@ import jakarta.json.bind.JsonbBuilder;
 import lk.ijse.test2.dto.StudentDTO;
 import lk.ijse.test2.dao.StudentDataProcess;
 import lk.ijse.test2.util.UtillProcess;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = "/student")
+@WebServlet(urlPatterns = "/student",loadOnStartup = 2)
 /*@WebServlet(urlPatterns = "/student",
         initParams = {
                 @WebInitParam(name = "driver-class",value = "com.mysql.cj.jdbc.Driver"),
@@ -27,23 +32,23 @@ import java.sql.SQLException;
                 @WebInitParam(name = "dbPassword",value = "12345"),
         }
 )*/
-public class StudentController extends HttpServlet {
-    Connection connection;
 
+public class StudentController extends HttpServlet {
+
+    static Logger logger = LoggerFactory.getLogger(StudentController.class);
+    Connection connection;
     static String SAVE_STUDENT="INSERT INTO student (id,name,city,email,level) VALUES (?,?,?,?,?)";
     static String Get_STUDENT="SELECT * from student where id=?";
     static String UPDATE_STUDENT = "UPDATE student SET name=?,city=?,email=?,level=? WHERE id=?";
     static String DELETE_SUTNDET ="DELETE FROM student WHERE id=?";
     @Override
     public void init() throws ServletException{
+        logger.info("StudentController init initialized");
         try {
-            var driverClass =getServletContext().getInitParameter("driver-class");
-            var dbUrl =getServletContext().getInitParameter("dbURL");
-            var UserName =getServletContext().getInitParameter("dbUserName");
-            var Password =getServletContext().getInitParameter("dbPassword");
-            Class.forName(driverClass);
-            this.connection= DriverManager.getConnection(dbUrl,UserName,Password);
-        }catch (ClassNotFoundException | SQLException e){
+            var ctx =new InitialContext();
+            DataSource pool = (DataSource) ctx.lookup("java:comp/env/jdbc/stuRegistration");
+            this.connection= pool.getConnection();
+        }catch (NamingException | SQLException e){
             throw new RuntimeException(e);
         }
     }
@@ -72,7 +77,8 @@ public class StudentController extends HttpServlet {
 
 
         try(var writer =response.getWriter()) {
-            Jsonb jsonb =JsonbBuilder.create();
+            Jsonb jsonb =JsonbBuilder.create(); //create jsonb object
+            //Assign DTO/Model to a Jsonb object
             StudentDTO studentDTO = jsonb.fromJson(req.getReader(), StudentDTO.class);
             studentDTO.setId(UtillProcess.generateId());
             /*var saveData = new StudentDataProcess();
