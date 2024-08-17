@@ -23,7 +23,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = "/student",loadOnStartup = 2)
+@WebServlet(urlPatterns = "/student")
 /*@WebServlet(urlPatterns = "/student",
         initParams = {
                 @WebInitParam(name = "driver-class",value = "com.mysql.cj.jdbc.Driver"),

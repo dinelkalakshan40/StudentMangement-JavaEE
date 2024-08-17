@@ -21,7 +21,7 @@
     </context-param>-->
     <context-param>
         <param-name>origin</param-name>
-        <param-value>http://localhost:5500</param-value>
+        <param-value>http://127.0.0.1:5500</param-value>
     </context-param>
     <resource-ref>
         <description>DB Connection</description>

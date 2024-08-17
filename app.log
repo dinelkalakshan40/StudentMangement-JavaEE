@@ -1,1 +1,4 @@
 10:55:08.912 [RMI TCP Connection(2)-127.0.0.1] INFO  l.i.t.controllers.StudentController -- StudentController init initialized
+11:44:20.703 [RMI TCP Connection(2)-127.0.0.1] INFO  l.i.t.controllers.StudentController -- StudentController init initialized
+11:48:44.853 [http-nio-8080-exec-1] INFO  l.i.t.controllers.StudentController -- StudentController init initialized
+11:55:37.935 [http-nio-8080-exec-1] INFO  l.i.t.controllers.StudentController -- StudentController init initialized
